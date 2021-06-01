@@ -1,24 +1,29 @@
-import logo from './logo.svg';
-import './App.css';
+// Dependencies
 
-function App() {
+import './App.css';
+import Header from './components/Header';
+import { ThemeContextConsumer } from './context/ThemeContext';
+import WelcomeMsg from './components/WelcomeMsg';
+import { LogInContextConsumer } from './context/LogInContext';
+import UserList from './components/UserList';
+
+// Components
+
+function App () {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ThemeContextConsumer>
+      {({ theme }) => (
+        <LogInContextConsumer>
+          {({ userName, isLoggedIn }) => (
+            <div className={`${theme}-App App`}>
+              <Header/>
+              <WelcomeMsg text={`¡Welcome ${userName}!`} theme={theme} isLoggedIn={isLoggedIn}/>
+              <UserList/>
+            </div>
+          )}
+        </LogInContextConsumer>
+      )}
+    </ThemeContextConsumer>
   );
 }
 
